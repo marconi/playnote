@@ -1,0 +1,27 @@
+@(notebookForm: Form[String], notebooks: List[com.evernote.edam.`type`.Notebook])
+
+@import helper._
+
+@main("Play Note!") {
+
+  <h3>Notebooks</h3>
+  <ul>
+    @notebooks.map { notebook =>
+      <li>@notebook.getName() - <a href="@routes.Application.deleteNotebook(notebook.getGuid())">Delete</a></li>
+    }
+  </ul>
+  
+  <h3>Add new notebook</h3>
+  
+  @form(routes.Application.newNotebook) {
+    @inputText(
+      notebookForm("name"),
+      '_label -> "Notebook Name",
+      '_showConstraints -> false,
+      '_error -> "Force an error",
+      '_showErrors -> false
+    )
+    <input type="submit" value="Create">
+  }
+
+}
